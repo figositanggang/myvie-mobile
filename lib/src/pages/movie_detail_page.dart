@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myvie/src/helpers/movie_helper.dart';
-import 'package:myvie/src/models/cast_model.dart';
+import 'package:myvie/src/models/people_model.dart';
 import 'package:myvie/src/models/genre_model.dart';
 import 'package:myvie/src/models/movie_model.dart';
 import 'package:myvie/src/models/movie_recommendation_model.dart';
@@ -78,8 +78,10 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.arrow_back),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black.withOpacity(.5),
               ),
@@ -111,12 +113,13 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                   ),
                   const SizedBox(height: 20),
 
-                  // @ Title
+                  // @ Info
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // @ Title
                         Row(
                           children: [
                             Expanded(
@@ -222,7 +225,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                               );
                             }
 
-                            return _Section(
+                            return const _Section(
                               title: "Casts",
                               child: SizedBox(
                                 height: 150,
@@ -244,33 +247,46 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                                   child: CircularProgressIndicator());
                             }
 
-                            final data = snapshot.data!.sublist(0, 5);
-                            return _Section(
+                            var data = snapshot.data!;
+                            if (data.length > 5) {
+                              data = snapshot.data!.sublist(0, 5);
+                              return _Section(
+                                title: "Recommendations",
+                                child: SizedBox(
+                                  height: 325,
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: data.length + 1,
+                                    itemBuilder: (context, index) {
+                                      if (index < data.length) {
+                                        final reccommendation =
+                                            MovieRecommendationModel.fromMap(
+                                                data[index]);
+
+                                        return RecommendationCard(
+                                            movieRecommendationModel:
+                                                reccommendation);
+                                      }
+
+                                      return Center(
+                                        child: TextButton(
+                                          onPressed: () {},
+                                          child: const Text("Lihat semua"),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              );
+                            }
+
+                            return const _Section(
                               title: "Recommendations",
                               child: SizedBox(
-                                height: 325,
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: data.length + 1,
-                                  itemBuilder: (context, index) {
-                                    if (index < data.length) {
-                                      final reccommendation =
-                                          MovieRecommendationModel.fromMap(
-                                              data[index]);
-
-                                      return RecommendationCard(
-                                          movieRecommendationModel:
-                                              reccommendation);
-                                    }
-
-                                    return Center(
-                                      child: TextButton(
-                                        onPressed: () {},
-                                        child: const Text("Lihat semua"),
-                                      ),
-                                    );
-                                  },
+                                height: 150,
+                                child: Center(
+                                  child: Text("No Recommendations"),
                                 ),
                               ),
                             );
@@ -338,7 +354,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                               );
                             }
 
-                            return _Section(
+                            return const _Section(
                               title: "Images",
                               child: SizedBox(
                                 height: 150,
@@ -392,7 +408,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                                                       : "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png",
                                                 ),
                                               ),
-                                              SizedBox(width: 10),
+                                              const SizedBox(width: 10),
                                               MyText(
                                                 review.author,
                                                 fontSize: 18,
@@ -416,7 +432,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                                 );
                               }
 
-                              return SizedBox(
+                              return const SizedBox(
                                 height: 150,
                                 child: Center(
                                   child: Text("No Reviews"),
@@ -533,7 +549,7 @@ class CastCard extends StatelessWidget {
               onTap: () {
                 navigateTo(PeopleDetailPage(personId: castModel.id), context);
               },
-              customBorder: CircleBorder(),
+              customBorder: const CircleBorder(),
             ),
           ),
         ),
