@@ -99,4 +99,36 @@ class MovieHelper {
 
     return res.data['results'] as List;
   }
+
+  // ! get movie images
+  static Future<List> getMovieImages(num id) async {
+    Response res = await dio.get(
+      'https://api.themoviedb.org/3/movie/$id/images',
+      options: Options(
+        headers: {
+          'accept': 'application/json',
+          'Authorization':
+              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MDcyNzQzODBmMTVlYjdhOTE5OTY0YmE1YmM2NTQxMiIsInN1YiI6IjYxZmJiYjliNDE0MjkxMDExNTM0MTkzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UUVhVRV0LhFvh4jWhn6bsBJOtNOgpwmexuPK0JJEoDU'
+        },
+      ),
+    );
+
+    return res.data['backdrops'] as List;
+  }
+
+  // ! get people detail
+  static Future<Map> getPeopleDetail(num id) async {
+    Response res = await dio.get(
+      'https://api.themoviedb.org/3/person/$id',
+      options: Options(
+        headers: {
+          'accept': 'application/json',
+          'Authorization':
+              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MDcyNzQzODBmMTVlYjdhOTE5OTY0YmE1YmM2NTQxMiIsInN1YiI6IjYxZmJiYjliNDE0MjkxMDExNTM0MTkzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UUVhVRV0LhFvh4jWhn6bsBJOtNOgpwmexuPK0JJEoDU'
+        },
+      ),
+    );
+
+    return res.data;
+  }
 }

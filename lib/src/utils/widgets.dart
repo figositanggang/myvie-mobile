@@ -68,8 +68,9 @@ class NowPlayingCard extends StatelessWidget {
             ],
             image: DecorationImage(
               fit: BoxFit.cover,
-              image:
-                  NetworkImage(MovieHelper.IMAGE_URL + movieModel.backdropPath),
+              image: NetworkImage(movieModel.backdropPath != null
+                  ? MovieHelper.IMAGE_URL + movieModel.backdropPath!
+                  : "https://dummyimage.com/600x400/000/fff"),
             ),
           ),
           child: Stack(
@@ -106,7 +107,7 @@ class NowPlayingCard extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  navigateTo(context, MovieDetailPage(id: movieModel.id));
+                  navigateTo(MovieDetailPage(id: movieModel.id), context);
                 },
                 borderRadius: BorderRadius.circular(10),
               ),

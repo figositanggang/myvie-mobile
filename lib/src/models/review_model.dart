@@ -31,3 +31,35 @@ class ReviewModel {
     );
   }
 }
+
+class AuthorDetailModel {
+  final String name;
+  final String username;
+  final String? avatar_path;
+  final num? rating;
+
+  AuthorDetailModel({
+    required this.name,
+    required this.username,
+    required this.avatar_path,
+    required this.rating,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'username': username,
+      'avatar_path': avatar_path,
+      'rating': rating,
+    };
+  }
+
+  factory AuthorDetailModel.fromJson(Map json) {
+    return AuthorDetailModel(
+      name: json['name'],
+      username: json['username'],
+      avatar_path: json['avatar_path'],
+      rating: json['rating'],
+    );
+  }
+}
