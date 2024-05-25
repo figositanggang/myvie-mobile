@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                           return Center(
                             child: TextButton(
                               onPressed: () {},
-                              child: MyText("Lihat semua"),
+                              child: const MyText("Lihat semua"),
                             ),
                           );
                         },

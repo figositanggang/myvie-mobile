@@ -131,4 +131,36 @@ class MovieHelper {
 
     return res.data;
   }
+
+  // ! get people movie credits
+  static Future<List> getPeopleMovieCredits(num id) async {
+    Response res = await dio.get(
+      'https://api.themoviedb.org/3/person/$id/movie_credits',
+      options: Options(
+        headers: {
+          'accept': 'application/json',
+          'Authorization':
+              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MDcyNzQzODBmMTVlYjdhOTE5OTY0YmE1YmM2NTQxMiIsInN1YiI6IjYxZmJiYjliNDE0MjkxMDExNTM0MTkzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UUVhVRV0LhFvh4jWhn6bsBJOtNOgpwmexuPK0JJEoDU'
+        },
+      ),
+    );
+
+    return res.data['cast'] as List;
+  }
+
+// ! get people tv credits
+  static Future<List> getPeopleTVCredits(num id) async {
+    Response res = await dio.get(
+      'https://api.themoviedb.org/3/person/$id/tv_credits',
+      options: Options(
+        headers: {
+          'accept': 'application/json',
+          'Authorization':
+              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MDcyNzQzODBmMTVlYjdhOTE5OTY0YmE1YmM2NTQxMiIsInN1YiI6IjYxZmJiYjliNDE0MjkxMDExNTM0MTkzNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UUVhVRV0LhFvh4jWhn6bsBJOtNOgpwmexuPK0JJEoDU'
+        },
+      ),
+    );
+
+    return res.data['cast'] as List;
+  }
 }
